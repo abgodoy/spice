@@ -5,24 +5,217 @@
   <meta charset="utf-8">
   <title></title>
   <meta name="viewport" content="width=device-width">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"
+    type="text/javascript"></script>
+  <script src="assets/js/dirpagination.js"></script>
+  <script src="assets/js/spice.js"></script>
+  <script type="text/javascript">// 
+    // var jsonFeed = "assets/spice-list.json";
+    var jsonFeed = "assets/spice-list-v2.json";
+  </script>
 </head>
 
-<style>
-  /* custom CSS styling goes here */
-</style>
-
 <body>
-  <div class="container">
-    <h1>My Bootstrap Page Shell</h1>
+  <style>
+    .application-info {
+      text-align: center;
+      background-color: #fff;
+    }
 
-  </div>
+    .applicant {
+      display: flex;
+      font-size: x-large;
+      min-height: 50px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .type-profile {
+      width: 100%;
+    }
+
+    .title {
+      display: flex;
+      min-height: 120px;
+      margin: auto;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .proj-dec-button {
+      min-height: 40px;
+    }
+
+    .entry {
+      margin-bottom: 20px;
+      padding: 0 10px;
+    }
+
+    .directory-container {
+      background-color: #01426a;
+    }
+
+    #directory-list {
+      background-color: #01426a;
+    }
+
+    .proj-desc-button {
+      min-height: 60px;
+    }
+
+    #directory-list .row {
+      padding: 0 15px;
+    }
+
+    .spice-nav {
+      color: #fff;
+    }
+  </style>
+
+  <div class="container">
+    <h1>All News</h1>
+
+    <div id="directory-list">
+      <div class="ng-cloak" ng-app="spiceDirectory" ng-controller="spiceListing">
+        <div class="form-row">
+          <div class="col-lg-6 col-md-6, col-sm-12">
+            <label class="col-form-label-lg" style="color: #fff;">College</label>
+            <select class="form-control form-control-md" ng-model="college_filter" placeholder="choose college">
+              <option disabled="disabled" hidden="" selected="selected" value="">Choose college</option>
+              <option value="all">ALL</option>
+              <option value="Huntley">Don B. Huntley College of Agriculture</option>
+              <option value="ENV">College of Environmental Design</option>
+              <option value="CLASS">College of Letters, Arts, and Social Sciences</option>
+              <option value="CEIS">College of Education and Integrative Studies</option>
+              <option value="Collins">Collins College of Hospitality Management</option>
+              <option value="Science">College of Science</option>
+              <option value="Engineering">College of Engineering</option>
+              <option value="Business">College of Business Administration</option>
+            </select>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6" style="padding-top: 15px; color: #fff;">
+            <span class="form-check">
+              <input id="curricular" name="competition" ng-model="competition_type" type="radio" value="innovative" />
+              <label class="col-form-label-md" for="innovate">Innovate</label>
+            </span>
+            <span class="form-check">
+              <input id="cocurricular" name="competition" ng-model="competition_type" type="radio" value="modernize" />
+              <label class="col-form-label-md" for="modernize">Modernize</label>
+            </span>
+            <div class="form-check">
+              <input id="bothcurricular" name="competition" ng-model="competition_type" type="radio" value="all" />
+              <label class="col-form-label-md" for="all">Both</label>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-12" style="color: #fff;">
+            <label class="col-form-label-lg">Competition Year</label>
+            <select class="form-control form-control-md" ng-model="competition_year" placeholder="choose filter">
+              <option disabled="disabled" hidden="" selected="selected" value="">competition year</option>
+              <option value="all">All</option>
+              <option ng-repeat="year in competition_years" value="{{year}}">{{year}}</option>
+            </select>
+          </div>
+        </div>
+        <!-- end form row -->
+        <nav aria-label="Site list navigation" aria-live="assertive" class="text-center spice-pagination">
+          <dir-pagination-controls boundary-links="true" direction-links="true" max-size="7"></dir-pagination-controls>
+        </nav>
+        <div class="row spice-row">
+          <div class="col-lg-4 col-md-6 entry fade-item" current-page="pagination.current"
+            dir-paginate="entry in entries | college:college_filter | competition:competition_type | year:competition_year | filter: search.$  | itemsPerPage:pageSize">
+            <div class="card h-100">
+              <div class="top-image">
+                <!-- <img alt="{{entry['image-alt']}}" class="type-profile"
+                  src="/render/file.act?path=/spice/img/{{entry['profile-image']}}.jpg" /> -->
+                  <img alt="{{entry['image-alt']}}" class="type-profile"
+                  src="img/{{entry.type.toLowerCase()}}.jpg" />
+              </div>
+              <div class="application-info">
+                <h2 class="applicant">{{entry.applicant}}</h2>
+                <div class="title">{{entry.application}}</div>
+                <div class="proj-desc-button">
+                  <button class="btn btn-primary" data-target="#modal-{{$index}}" data-toggle="modal" type="button">View
+                    Project Description</button>
+                </div>
+              </div>
+            </div>
+            <!-- MODAL -->
+            <div aria-hidden="true" aria-labelledby="" class="modal fade" id="modal-{{$index}}" role="dialog"
+              style="padding-left: 17px;" tabindex="-1">
+              <div class="modal-dialog spice-modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">More about the SPICE application</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                      <span aria-hidden="true">&#215;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div>
+                      <strong>Application ID:</strong> {{entry['application-id']}}
+                    </div>
+                    <div>
+                      <strong>Competition Year: </strong> {{entry['competition-year']}}
+                    </div>
+                    <div>
+                      <strong>Applicant: </strong> {{entry.applicant}}
+                    </div>
+                    <div>
+                      <strong>Collaborators: </strong> {{entry.collaborators}}
+                    </div>
+                    <div>
+                      <strong>Amount Awarded: </strong> {{entry['amount-awarded']}}
+                    </div>
+                    <div>
+                      <strong>Primary College: </strong> {{entry['primary-college']}}
+                    </div>
+                    <div>
+                      <strong>Abstract: </strong> {{entry.abstract}}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END MODAL -->
+          </div>
+        </div>
+        <!-- end row -->
+      </div>
+    </div>
+    <!-- end directory-list -->
+
+
+  </div> <!-- end container -->
 </body>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+  integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+  integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+<!-- Bootstrap 4.1 Version -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  <script src="assets/js/fade-in.js"></script>
+
 
 </html>
